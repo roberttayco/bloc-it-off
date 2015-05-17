@@ -1,0 +1,21 @@
+@import "vars";
+@import "typography";
+@import "task-container";
+
+body {
+   background: $color-gray-md;
+   margin:     $base-spacing-unit * 4;
+}
+
+ul, ol {
+   list-style: none;
+   margin:     0;
+   padding:    0;
+}
+
+.container {
+   margin:    0 auto;
+   max-width: 640px;
+   width:     80%;
+}
+

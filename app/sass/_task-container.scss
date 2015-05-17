@@ -1,0 +1,13 @@
+.list__container {
+   background: #fff;
+   padding:    0;
+}
+   .list__container-item {
+      border-bottom: 1px solid $color-gray-ui;
+      padding:       $base-spacing-unit * 2;
+      &:last-child { border: 0; }
+   }
+.list__header {
+   background: $color-gray-xlt;
+   padding:    $base-spacing-unit * 2;
+}
