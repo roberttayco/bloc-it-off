@@ -1,9 +1,16 @@
 // Colors
-$color-gray-xlt: #f3f3f3;
-$color-gray-md:  #e3e3e3;
-$color-gray-ui:  #d4d4d4;
+$color-gray-xlt: #f6f6f6;
+$color-gray-lt:  #f3f3f3;
+$color-gray-md:  #d4d4d4;
+$color-gray-ui:  $color-gray-md;
 
-$color-copy:     #4e4e4e;
+$color-brand:    #EA705E;
+
+$color-copy:     #8e8e8e;
+$color-heading:  #5e5e5e;
 
 // Layout
 $base-spacing-unit: 12px;
+
+
+$border-radius: 6px;

@@ -3,7 +3,7 @@
 @import "task-container";
 
 body {
-   background: $color-gray-md;
+   background: $color-gray-lt;
    margin:     $base-spacing-unit * 4;
 }
 
@@ -16,6 +16,6 @@ ul, ol {
 .container {
    margin:    0 auto;
    max-width: 640px;
-   width:     80%;
+   width:     85%;
 }
 

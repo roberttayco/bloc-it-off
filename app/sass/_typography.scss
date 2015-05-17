@@ -1,6 +1,8 @@
 body {
-   color: $color-copy;
+   color:       $color-copy;
    font-family: 'helvetica neue', arial, helvetica, sans-serif;
+   font-size:   100%;
+   font-weight: 300;
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -8,5 +10,6 @@ h1,h2,h3,h4,h5,h6 {
    margin: 0;
 }
 p {
-   margin: 0 0 1.5em;
+   font-size: .875em;
+   margin:    0 0 1.5em;
 }

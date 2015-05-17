@@ -1,13 +1,27 @@
+.task-window {
+   // box-shadow: 0 4px 12px rgba(0,0,0,.15);
+}
+
+.list__header {
+   background:    #fff;
+   border-bottom: 1px solid $color-gray-lt;
+   border-radius: $border-radius $border-radius 0 0;
+   color:         $color-brand;
+   padding:       $base-spacing-unit * 2;
+}
+
 .list__container {
    background: #fff;
    padding:    0;
 }
    .list__container-item {
-      border-bottom: 1px solid $color-gray-ui;
+      border-bottom: 1px solid $color-gray-lt;
+      color:         $color-copy;
+      font-size:     .875em;
       padding:       $base-spacing-unit * 2;
       &:last-child { border: 0; }
    }
-.list__header {
-   background: $color-gray-xlt;
-   padding:    $base-spacing-unit * 2;
+
+.list__input {
+   padding: $base-spacing-unit * 2;
 }
