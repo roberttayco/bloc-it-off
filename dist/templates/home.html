@@ -4,9 +4,9 @@
          <h3>Current Tasks</h3>
       </div>
       <div class="list__container">
-         <ul ng-repeat="task in tasks">
-            <li class="list__container-item">
-               <span>task 1</span>
+         <ul>
+            <li ng-repeat="task in tasks" class="list__container-item">
+               <span>{{ task.text }}</span>
             </li>
          </ul>
       </div>
