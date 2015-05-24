@@ -19,8 +19,6 @@ blocItOff.config(['$stateProvider', '$locationProvider', function($stateProvider
 blocItOff.controller('Main.controller', ['$scope', 'TaskList', 'Firebase', function($scope, $TaskList, $Firebase) {
    // var ref = new Firebase('https://crackling-heat-1971.firebaseio.com/tasks');
 
-   // $scope.tasks = $firebaseArray(ref);
-
    // create synced array
    // $scope.tasks = $firebaseArray(ref);
 
