@@ -6,13 +6,14 @@
       <div class="list__container">
          <ul>
             <li ng-repeat="task in tasks" class="list__container-item">
-               <span>{{ task.text }}</span>
+               <span>{{ task.text }}<br>{{ task.age }}</span>
             </li>
          </ul>
       </div>
-      <div class="list__input">
-         <input ng-model="newTaskText" class="input--list-item" placeholder="New Task">
+      <form class="list__input">
+         <input type="text" ng-model="newTaskText" class="input--list-item" placeholder="New Task">
+         <input type="hidden" ng-model="newTaskDate">
          <button ng-click="addTask()" class="btn--list-item" type="button">Add Task</button>
-      </div>
+      </form>
    </div>
 </div>
