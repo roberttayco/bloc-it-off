@@ -21,7 +21,8 @@ blocItOff.controller('Main.controller', ['$scope', '$firebaseArray', function($s
    // add new items to array
    $scope.addTask = function() {
       $scope.tasks.$add({
-         text: $scope.newTaskText
+         text: $scope.newTaskText,
+         age:  new Date()
       });
    };
 }]);
