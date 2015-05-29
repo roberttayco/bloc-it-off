@@ -15,20 +15,42 @@ blocItOff.config(['$stateProvider', '$locationProvider', function($stateProvider
 
 }]);
 
+// Format date into something readable
+blocItOff.filter("formatDate", function () {
+   return function (input) {
+      var date = new Date(input);
+      return (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+   }
+});
+
 // Trying to access the services created below in the Main controller
-blocItOff.controller('Main.controller', ['$scope', 'firebase', function($scope, $firebase) {
+blocItOff.controller('Main.controller', ['$scope', '$firebaseArray', function($scope, $firebaseArray) {
    var ref = new Firebase('https://crackling-heat-1971.firebaseio.com/tasks');
 
    // create synced array
    $scope.tasks = $firebaseArray(ref);
 
+   // iterate over every task and see if it's expired?
+   // expired property
+   // $scope.isExpired = function(currentTime) {
+   // console.log($scope.tasks);
+   // }
+
+
    // add new items to array
    $scope.addTask = function() {
-      // $scope.newTaskDate = new Date();
-      // console.log($scope.newTaskDate); // This is working
+      var currentTime = (new Date()).getTime();
+      for (var i = 0; i < $scope.tasks.length; i++) {
+         console.log($scope.tasks[i].age);
+         if ((currentTime - $scope.tasks[i].age) > 20000) {
+            $scope.tasks[i].status = 'expired';
+         }
+      }
+
       $scope.tasks.$add({
          text: $scope.newTaskText,
-         age:  new Date()    // But this is not being added to each task in Firebase
+         age:  (new Date()).getTime(),
+         status: 'active'
       });
    };
 

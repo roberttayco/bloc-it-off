@@ -5,8 +5,13 @@
       </div>
       <div class="list__container">
          <ul>
-            <li ng-repeat="task in tasks" class="list__container-item">
-               <span>{{ task.text }}<br>{{ task.age }}</span>
+            <li ng-show="!expired" ng-repeat="task in tasks" class="list__container-item">
+               <span>
+                  {{ task.text }}<br>
+                  {{ task.age | formatDate }}<br>
+                  {{ task.status }}
+               </span>
+
             </li>
          </ul>
       </div>
