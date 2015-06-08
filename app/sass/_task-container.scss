@@ -17,11 +17,51 @@
    .list__container-item {
       border-bottom: 1px solid $color-gray-lt;
       color:         $color-copy;
-      font-size:     .875em;
+      // font-size:     .875em;
+      line-height:   1.5;
       padding:       $base-spacing-unit * 2;
-      &:last-child { border: 0; }
+      // &:last-child { border: 0; }
    }
 
 .list__input {
-   padding: $base-spacing-unit * 2;
+   background: #fff;
+   position:   relative;
+
+   input {
+      border:    0;
+      font-size: .875em;
+      padding:   $base-spacing-unit * 2;
+      width:     100%;
+
+      &:focus { outline: 0; }
+   }
+
+
+   button {
+      border:        0;
+      border-radius: 100px;
+      background:    $color-brand;
+      cursor:        pointer;
+      position:      relative;
+      top:           8px;
+      height:        $base-spacing-unit * 4;
+      width:         $base-spacing-unit * 4;
+      padding:       0;
+
+      .add {
+         color:       #fff;
+         display:     inline-block;
+         font-size:   24px;
+         font-weight: 700;
+         line-height: 0.5;
+         text-align:  center;
+         width:       100%;
+      }
+   }
+}
+
+.btn-action {
+   position: absolute;
+   right:    $base-spacing-unit;
+   top:      0;
 }

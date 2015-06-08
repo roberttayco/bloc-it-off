@@ -48,11 +48,16 @@ blocItOff.controller('Main.controller', ['$scope', '$firebaseArray', function($s
 
       $scope.tasks.$add({
          text: $scope.newTaskText,
-         age:  (new Date()).getTime(),
-         status: 'active'
+         age:  (new Date()).getTime()
       });
    };
 
+}]);
+
+
+blocItOff.factory('firebaseDb', ['$firebaseArray', function($firebaseArray) {
+   var ref = new Firebase('https://crackling-heat-1971.firebaseio.com/tasks');
+   $scope.tasks = $firebaseArray(ref);
 }]);
 
 // Experimenting with making the Firebase DB a service that can be accessed by

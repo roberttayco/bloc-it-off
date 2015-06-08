@@ -2,6 +2,8 @@
 @import "typography";
 @import "task-container";
 
+* { box-sizing: border-box; }
+
 body {
    background: $color-gray-lt;
    margin:     $base-spacing-unit * 4;
