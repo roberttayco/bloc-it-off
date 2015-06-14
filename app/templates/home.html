@@ -5,7 +5,7 @@
       </div>
       <div class="list__container">
          <ul>
-            <li ng-show="!expired" ng-repeat="task in tasks" class="list__container-item">
+            <li ng-hide="expired" ng-repeat="task in tasks" class="list__container-item">
                <span>
                   {{ task.text }}<br>
                   {{ task.age | formatDate }}<br>
