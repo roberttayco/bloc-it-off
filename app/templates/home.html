@@ -8,8 +8,7 @@
             <li ng-hide="expired" ng-repeat="task in main.tasks" class="list__container-item">
                <span>
                   {{ task.text }}<br>
-                  {{ task.age | formatDate }}<br>
-                  {{ task.status }}
+                  {{ task.age | formatDate }}
                </span>
             </li>
          </ul>

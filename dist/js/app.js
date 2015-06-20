@@ -22,7 +22,7 @@ blocItOff.filter("formatDate", function () {
 });
 
 
-blocItOff.controller('MainController', ['$scope', '$firebaseArray', function($scope,$firebaseArray) {
+blocItOff.controller('MainController', ['$firebaseArray', function($firebaseArray) {
    var ref = new Firebase('https://crackling-heat-1971.firebaseio.com/tasks');
 
    // create synced array
@@ -30,18 +30,18 @@ blocItOff.controller('MainController', ['$scope', '$firebaseArray', function($sc
 
    var tasks = $firebaseArray(ref);
    this.expiredTasks = [];
-   this.activeTasks = [];
+   this.activeTasks  = [];
 
    // loop over tasks
    // fill expiredTasks and activeTasks
 
-   this.tasks = activeTasks;
+   this.tasks = this.activeTasks;
 
-   this.viewExpired = function () {
-      this.tasks = expiredTasks;
+   this.viewExpired = function() {
+      this.tasks = this.expiredTasks;
    };
 
-   this.viewActive = function () {};
+   this.viewActive = function() {};
 
    this.updateTasks = function() {
       // iterate over active
@@ -89,20 +89,22 @@ blocItOff.controller('MainController', ['$scope', '$firebaseArray', function($sc
 
 
    // add new items to array
-   // $scope.addTask = function() {
-   //    var currentTime = (new Date()).getTime();
-   //    for (var i = 0; i < $scope.tasks.length; i++) {
-   //       console.log($scope.tasks[i].age);
-   //       if ((currentTime - $scope.tasks[i].age) > 20000) {
-   //          $scope.tasks[i].status = 'expired';
-   //       }
-   //    }
+/*
+   $scope.addTask = function() {
+      var currentTime = (new Date()).getTime();
+      for (var i = 0; i < $scope.tasks.length; i++) {
+         console.log($scope.tasks[i].age);
+         if ((currentTime - $scope.tasks[i].age) > 20000) {
+            $scope.tasks[i].status = 'expired';
+         }
+      }
 
-   //    $scope.tasks.$add({
-   //       text: $scope.newTaskText,
-   //       age:  (new Date()).getTime()
-   //    });
-   // };
+      $scope.tasks.$add({
+         text: $scope.newTaskText,
+         age:  (new Date()).getTime()
+      });
+   };
+*/
 
 }]);
 
