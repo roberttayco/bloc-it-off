@@ -22,12 +22,12 @@ blocItOff.config(['$stateProvider', '$locationProvider', function($stateProvider
 }]);
 
 // Format date into something readable
-blocItOff.filter("formatDate", function () {
-   return function (input) {
-      var date = new Date(input);
-      return (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
-   }
-});
+// blocItOff.filter("formatDate", function () {
+//    return function (input) {
+//       var date = new Date(input);
+//       return (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+//    }
+// });
 
 blocItOff.controller('MainController', ['$scope', '$firebaseArray', function($scope, $firebaseArray) {
    $scope.tasks        = $firebaseArray(ref); // All tasks array
@@ -126,8 +126,7 @@ blocItOff.directive('newTaskInput', function() {
             // scope.currentTime = (new Date()).getTime();
             scope.task = {
                text: scope.newTaskText,
-               age:  (new Date()).getTime(),
-               expired: false
+               age:  (new Date()).getTime()
             };
 
             scope.tasks.$add(scope.task);
