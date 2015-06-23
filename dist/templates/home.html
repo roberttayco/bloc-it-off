@@ -1,14 +1,14 @@
-<div class="container" ng-controller="MainController as main">
+<div class="container">
    <div class="task-window">
       <div class="list__header">
          <h3>Current Tasks</h3>
       </div>
       <div class="list__container">
          <ul>
-            <li ng-hide="expired" ng-repeat="task in main.tasks" class="list__container-item">
+            <li ng-repeat="task in activeTasks" class="list__container-item">
                <span>
                   {{ task.text }}<br>
-                  {{ task.age | formatDate }}
+                  {{ task.age | date }}
                </span>
             </li>
          </ul>

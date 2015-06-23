@@ -1,16 +1,24 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 blocItOff = angular.module('BlocItOff', ['ui.router', 'firebase']);
 
-// var ref = new Firebase('https://crackling-heat-1971.firebaseio.com/tasks');
+var ref = new Firebase('https://crackling-heat-1971.firebaseio.com/tasks');
 
 blocItOff.config(['$stateProvider', '$locationProvider', function($stateProvider, $locationProvider) {
-   $locationProvider.html5Mode(true);
+   $locationProvider.html5Mode({
+      enabled: true
+   });
    //  Main view
-   $stateProvider.state('main', {
+   $stateProvider.state('active', {
       url: '/',
       controller: 'MainController',
       templateUrl: '/templates/home.html'
    });
+
+   // $stateProvider.state('expired', {
+   //    url: '/expired',
+   //    controller: 'MainController',
+   //    templateUrl: '/templates/home.html'
+   // });
 }]);
 
 // Format date into something readable
@@ -21,51 +29,50 @@ blocItOff.filter("formatDate", function () {
    }
 });
 
-
-blocItOff.controller('MainController', ['$firebaseArray', function($firebaseArray) {
-   var ref = new Firebase('https://crackling-heat-1971.firebaseio.com/tasks');
-
-   // create synced array
-   //this.tasks = $firebaseArray(ref);
-
-   var tasks = $firebaseArray(ref);
-   this.expiredTasks = [];
-   this.activeTasks  = [];
+blocItOff.controller('MainController', ['$scope', '$firebaseArray', function($scope, $firebaseArray) {
+   $scope.tasks        = $firebaseArray(ref); // All tasks array
+   $scope.activeTasks  = []; // Active tasks array
+   $scope.expiredTasks = []; // Expired tasks array
 
    // loop over tasks
    // fill expiredTasks and activeTasks
+   for (var i = 0; i < $scope.tasks.length; i++) {
 
-   this.tasks = this.activeTasks;
+   }
 
-   this.viewExpired = function() {
-      this.tasks = this.expiredTasks;
+
+   $scope.viewExpired = function() {
+      $scope.tasks = $scope.expiredTasks;
    };
 
-   this.viewActive = function() {};
+   $scope.viewActive = function() {};
 
-   this.updateTasks = function() {
+   $scope.updateTasks = function() {
       // iterate over active
       // if expired, put into expired
+      var newActiveTasks  = [],
+          newExpiredTasks = [],
+          currentTime     = new Date().getTime();
 
-      var newActiveTasks = [];
-
-      for (var i = 0; i < this.activeTasks.length; i++) {
-         if (this.activeTasks[i].age < 1000){
-            this.expiredTasks.push(this.activeTasks[i]);
+      for (var i = 0; i < $scope.tasks.length; i++) {
+         if ((currentTime - $scope.tasks[i].age) > 20000){
+            newExpiredTasks.push($scope.tasks[i]);
          } else {
-            newActiveTasks.push(this.activeTasks[i]);
+            newActiveTasks.push($scope.tasks[i]);
          }
       }
 
-      this.activeTasks = newActiveTasks;
-      this.tasks = newActiveTasks;
+      $scope.activeTasks  = newActiveTasks;
+      $scope.expiredTasks = newExpiredTasks;
+
+      console.log($scope.activeTasks);
+      console.log($scope.expiredTasks);
 
       // if it doesn't update
-      // this.$apply();
+      $scope.$apply();
    };
-
    // if you want to check in the background
-   // var checkAge = setInterval(updateTasks.bind(this), 10000);
+   var checkAge = setInterval($scope.updateTasks, 10000);
 
    // if you want to stop background checking,
    // clearInterval(checkAge);
@@ -112,18 +119,21 @@ blocItOff.directive('newTaskInput', function() {
    return {
       restrict: 'E',
       templateUrl: '/templates/new-task-input.html',
-      link: function(scope) {
+      link: function(scope, element) {
          scope.addTask = function() {
-            var currentTime = (new Date()).getTime();
-            var task = {
+            // this doesn't need to be stored when adding a new task
+            // save this for finding the expired tasks
+            // scope.currentTime = (new Date()).getTime();
+            scope.task = {
                text: scope.newTaskText,
-               age:  (new Date()).getTime()
+               age:  (new Date()).getTime(),
+               expired: false
             };
 
-            scope.tasks.$add(task);
+            scope.tasks.$add(scope.task);
 
-            scope.activeTasks.push(task);
-            scope.updateTasks();
+            // scope.activeTasks.push(scope.task);
+            // scope.updateTasks();
          };
       }//,
       //controllerAs: 'newTask'
