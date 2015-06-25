@@ -5,14 +5,14 @@
       </div>
       <div class="list__container">
          <ul>
-            <li ng-repeat="task in tasks" class="list__container-item">
-               <span>{{ task.text }}<br>{{ task.age }}</span>
+            <li ng-repeat="task in activeTasks" class="list__container-item">
+               <span>
+                  {{ task.text }}<br>
+                  {{ task.age | date }}
+               </span>
             </li>
          </ul>
       </div>
-      <div class="list__input">
-         <input ng-model="newTaskText" class="input--list-item" placeholder="New Task">
-         <button ng-click="addTask()" class="btn--list-item" type="button">Add Task</button>
-      </div>
+      <new-task-input></new-task-input>
    </div>
 </div>

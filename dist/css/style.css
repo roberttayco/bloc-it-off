@@ -26,13 +26,45 @@ p {
 .list__container-item {
   border-bottom: 1px solid #f3f3f3;
   color: #8e8e8e;
-  font-size: 0.875em;
+  line-height: 1.5;
   padding: 24px; }
-  .list__container-item:last-child {
-    border: 0; }
 
 .list__input {
-  padding: 24px; }
+  background: #fff;
+  position: relative; }
+  .list__input input {
+    border: 0;
+    font-size: 0.875em;
+    padding: 24px;
+    width: 100%; }
+    .list__input input:focus {
+      outline: 0; }
+  .list__input button {
+    border: 0;
+    border-radius: 100px;
+    background: #EA705E;
+    cursor: pointer;
+    position: relative;
+    top: 8px;
+    height: 48px;
+    width: 48px;
+    padding: 0; }
+    .list__input button .add {
+      color: #fff;
+      display: inline-block;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 0.5;
+      text-align: center;
+      width: 100%; }
+
+.btn-action {
+  position: absolute;
+  right: 12px;
+  top: 0; }
+
+* {
+  box-sizing: border-box; }
 
 body {
   background: #f3f3f3;
