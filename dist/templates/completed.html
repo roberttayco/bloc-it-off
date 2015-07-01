@@ -5,7 +5,7 @@
       </div>
       <div class="list__container">
          <ul>
-            <li ng-repeat="task in activeTasks" class="list__container-item">
+            <li ng-repeat="task in expiredTasks" class="list__container-item">
                <span>
                   {{ task.text }}<br>
                   {{ task.age | date }}
@@ -13,6 +13,6 @@
             </li>
          </ul>
       </div>
-      <new-task-input></new-task-input>
+      <!-- <new-task-input></new-task-input> -->
    </div>
 </div>
