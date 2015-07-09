@@ -1,11 +1,17 @@
 <div class="container">
+   <ul class="nav">
+      <li><a href="#" ng-click="viewActive()">Active Tasks</a></li>
+      <li><a href="#" ng-click="viewExpired()">Past Tasks</a></li>
+   </ul>
+</div>
+<div class="container">
    <div class="task-window">
       <div class="list__header">
          <h3>{{ title }}</h3>
       </div>
       <div class="list__container">
          <ul>
-            <li ng-repeat="task in activeTasks" class="list__container-item">
+            <li ng-repeat="task in visibleTasks" class="list__container-item">
                <span>
                   {{ task.text }}<br>
                   {{ task.age | date }}

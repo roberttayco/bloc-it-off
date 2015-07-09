@@ -13,13 +13,14 @@ blocItOff.config(['$stateProvider', '$locationProvider', function($stateProvider
       controller: 'MainController',
       templateUrl: '/templates/home.html'
    });
-
+/*
    // Completed and Expired tasks
    $stateProvider.state('past', {
       url: '/completed',
       controller: 'PastController',
       templateUrl: '/templates/completed.html'
    });
+*/
 
 }]);
 
@@ -31,18 +32,42 @@ blocItOff.config(['$stateProvider', '$locationProvider', function($stateProvider
 //    }
 // });
 
+
+// Active Tasks
+// ====================
 blocItOff.controller('MainController', ['$scope', '$firebaseArray', function($scope, $firebaseArray) {
    $scope.tasks        = $firebaseArray(ref); // All tasks array
+   $scope.visibleTasks = [];
    $scope.activeTasks  = []; // Active tasks array
    $scope.expiredTasks = []; // Expired tasks array
 
+   var viewingExpired = false;
+
    $scope.title = 'Active Tasks';
 
+/*
+   var interval = setInterval(function () {
+      $scope.updateTasks();
+      if (viewingExpired) {
+         $scope.viewExpired();
+      } else {
+         $scope.viewActive();
+      }
+      $scope.$apply();
+   }, 5000);
+*/
+
    $scope.viewExpired = function() {
-      $scope.tasks = $scope.expiredTasks;
+      $scope.title = "Expired Tasks";
+      $scope.visibleTasks = $scope.expiredTasks;
+      viewingExpired = true;
    };
 
-   $scope.viewActive = function() {};
+   $scope.viewActive = function() {
+      $scope.title = "Active Tasks";
+      $scope.visibleTasks = $scope.activeTasks;
+      viewingExpired = false;
+   };
 
    $scope.updateTasks = function() {
       // iterate over active
@@ -52,7 +77,7 @@ blocItOff.controller('MainController', ['$scope', '$firebaseArray', function($sc
           currentTime     = new Date().getTime();
 
       for (var i = 0; i < $scope.tasks.length; i++) {
-         if ((currentTime - $scope.tasks[i].age) > 20000){
+         if ((currentTime - $scope.tasks[i].age) > 5000){
             newExpiredTasks.push($scope.tasks[i]);
          } else {
             newActiveTasks.push($scope.tasks[i]);
@@ -66,14 +91,19 @@ blocItOff.controller('MainController', ['$scope', '$firebaseArray', function($sc
       console.log($scope.expiredTasks);
 
       // if it doesn't update
-      $scope.$apply();
+      //$scope.$apply();
    };
+
    // if you want to check in the background
    // var checkAge = setInterval($scope.updateTasks, 10000);
 
    // if you want to stop background checking,
    // clearInterval(checkAge);
 
+   $scope.tasks.$loaded(function () {
+      $scope.updateTasks();
+      $scope.viewActive();
+   });
 /*
    var checkAge = setInterval(function () {
       // loop through tasks and move them as needed
@@ -91,27 +121,11 @@ blocItOff.controller('MainController', ['$scope', '$firebaseArray', function($sc
    // console.log($scope.tasks);
    // }
 
-
-   // add new items to array
-/*
-   $scope.addTask = function() {
-      var currentTime = (new Date()).getTime();
-      for (var i = 0; i < $scope.tasks.length; i++) {
-         console.log($scope.tasks[i].age);
-         if ((currentTime - $scope.tasks[i].age) > 20000) {
-            $scope.tasks[i].status = 'expired';
-         }
-      }
-
-      $scope.tasks.$add({
-         text: $scope.newTaskText,
-         age:  (new Date()).getTime()
-      });
-   };
-*/
-
 }]);
 
+// Past Tasks
+// ====================
+/*
 blocItOff.controller('PastController', ['$scope', '$firebaseArray', function($scope, $firebaseArray) {
    $scope.tasks        = $firebaseArray(ref); // All tasks array
    $scope.expiredTasks = []; // Expired tasks array
@@ -137,7 +151,7 @@ blocItOff.controller('PastController', ['$scope', '$firebaseArray', function($sc
    };
 
 }]);
-
+*/
 
 blocItOff.directive('newTaskInput', function() {
    return {
@@ -153,10 +167,11 @@ blocItOff.directive('newTaskInput', function() {
                age:  (new Date()).getTime()
             };
 
-            scope.tasks.$add(scope.task);
-
-            // scope.activeTasks.push(scope.task);
-            // scope.updateTasks();
+            scope.tasks.$add(scope.task).then(function () {
+               scope.activeTasks.push(scope.task);
+               scope.updateTasks();
+               scope.newTaskText = null;
+            });
          };
       }//,
       //controllerAs: 'newTask'
