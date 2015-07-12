@@ -1,5 +1,12 @@
 <form class="list__input">
    <input type="text" ng-model="newTaskText" class="input--list-item" placeholder="Add a new task...">
+   <select ng-model="newTaskPriority">
+     <option  value="">Priority</option>
+     <option  value="low">Low</option>
+     <option  value="med">Med</option>
+     <option  value="high">High</option>
+   </select>
+   <input type="hidden" ng-model="newTaskState" value="active">
    <div class="btn-action">
       <button ng-click="addTask()" class="btn--list-item" type="submit">
          <i class="add">+</i>

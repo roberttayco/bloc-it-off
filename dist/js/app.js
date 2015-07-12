@@ -24,17 +24,6 @@ blocItOff.config(['$stateProvider', '$locationProvider', function($stateProvider
 
 }]);
 
-// Format date into something readable
-// blocItOff.filter("formatDate", function () {
-//    return function (input) {
-//       var date = new Date(input);
-//       return (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
-//    }
-// });
-
-
-// Active Tasks
-// ====================
 blocItOff.controller('MainController', ['$scope', '$firebaseArray', function($scope, $firebaseArray) {
    $scope.tasks        = $firebaseArray(ref); // All tasks array
    $scope.visibleTasks = [];
@@ -45,7 +34,7 @@ blocItOff.controller('MainController', ['$scope', '$firebaseArray', function($sc
 
    $scope.title = 'Active Tasks';
 
-/*
+// update the active & past task lists every so often
    var interval = setInterval(function () {
       $scope.updateTasks();
       if (viewingExpired) {
@@ -54,8 +43,7 @@ blocItOff.controller('MainController', ['$scope', '$firebaseArray', function($sc
          $scope.viewActive();
       }
       $scope.$apply();
-   }, 5000);
-*/
+   }, 60000);
 
    $scope.viewExpired = function() {
       $scope.title = "Expired Tasks";
@@ -77,7 +65,7 @@ blocItOff.controller('MainController', ['$scope', '$firebaseArray', function($sc
           currentTime     = new Date().getTime();
 
       for (var i = 0; i < $scope.tasks.length; i++) {
-         if ((currentTime - $scope.tasks[i].age) > 5000){
+         if ((currentTime - $scope.tasks[i].age) > 120000){
             newExpiredTasks.push($scope.tasks[i]);
          } else {
             newActiveTasks.push($scope.tasks[i]);
@@ -104,22 +92,6 @@ blocItOff.controller('MainController', ['$scope', '$firebaseArray', function($sc
       $scope.updateTasks();
       $scope.viewActive();
    });
-/*
-   var checkAge = setInterval(function () {
-      // loop through tasks and move them as needed
-      // from active to expired
-
-      // if you need to access the scope, bind() the function
-      // or set var $scope = this right outside of this setInterval.
-
-   }, 10000);
-*/
-
-   // iterate over every task and see if it's expired?
-   // expired property
-   // $scope.isExpired = function(currentTime) {
-   // console.log($scope.tasks);
-   // }
 
 }]);
 
@@ -162,19 +134,23 @@ blocItOff.directive('newTaskInput', function() {
             // this doesn't need to be stored when adding a new task
             // save this for finding the expired tasks
             // scope.currentTime = (new Date()).getTime();
+            scope.newTaskPriority = '';
+            scope.newTaskState = '';
             scope.task = {
-               text: scope.newTaskText,
-               age:  (new Date()).getTime()
+               text:     scope.newTaskText,
+               age:      (new Date()).getTime(),
+               state:    scope.newTaskState,
+               priority: scope.newTaskPriority
             };
 
             scope.tasks.$add(scope.task).then(function () {
                scope.activeTasks.push(scope.task);
                scope.updateTasks();
                scope.newTaskText = null;
+               scope.newTaskPriority = null;
             });
          };
-      }//,
-      //controllerAs: 'newTask'
+      }
    };
 });
 
