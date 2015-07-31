@@ -12,11 +12,13 @@
       <div class="list__container">
          <ul>
             <li ng-repeat="task in visibleTasks" class="list__container-item">
-               <span>
-                  {{ task.text }}<br>
-                  {{ task.age | date }}<br>
-                  {{ task.priority }}
-               </span>
+               <div class="task-item priority--{{ task.priority }}">
+                  <div class="task-item__details">
+                     {{ task.text }}<br>
+                     <span class="task-item__date">{{ task.age | date }}</span>
+                  </div>
+                 <button class="task-item__btn">Complete</button>
+              </div>
             </li>
          </ul>
       </div>

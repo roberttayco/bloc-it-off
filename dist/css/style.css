@@ -26,8 +26,7 @@ p {
 .list__container-item {
   border-bottom: 1px solid #f3f3f3;
   color: #8e8e8e;
-  line-height: 1.5;
-  padding: 24px; }
+  line-height: 1.5; }
 
 .list__input {
   background: #fff;
@@ -62,6 +61,26 @@ p {
   position: absolute;
   right: 12px;
   top: 0; }
+
+.task-item {
+  padding: 18px; }
+  .task-item.priority--low {
+    border-left: 4px solid green; }
+  .task-item.priority--med {
+    border-left: 4px solid gray; }
+  .task-item.priority--high {
+    border-left: 4px solid red; }
+
+.task-item__date {
+  color: #d4d4d4;
+  font-size: 12px;
+  line-height: 1.25; }
+
+.task-item__btn {
+  background: red;
+  border: 0;
+  border-radius: 2px;
+  color: #fff; }
 
 * {
   box-sizing: border-box; }

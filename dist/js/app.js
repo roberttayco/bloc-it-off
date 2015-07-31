@@ -13,6 +13,7 @@ blocItOff.config(['$stateProvider', '$locationProvider', function($stateProvider
       controller: 'MainController',
       templateUrl: '/templates/home.html'
    });
+
 /*
    // Completed and Expired tasks
    $stateProvider.state('past', {
@@ -26,7 +27,7 @@ blocItOff.config(['$stateProvider', '$locationProvider', function($stateProvider
 
 blocItOff.controller('MainController', ['$scope', '$firebaseArray', function($scope, $firebaseArray) {
    $scope.tasks        = $firebaseArray(ref); // All tasks array
-   $scope.visibleTasks = [];
+   $scope.visibleTasks = []; // The tasks visible in the current view
    $scope.activeTasks  = []; // Active tasks array
    $scope.expiredTasks = []; // Expired tasks array
 
@@ -35,7 +36,7 @@ blocItOff.controller('MainController', ['$scope', '$firebaseArray', function($sc
    $scope.title = 'Active Tasks';
 
 // update the active & past task lists every so often
-   var interval = setInterval(function () {
+   var interval = setInterval(function() {
       $scope.updateTasks();
       if (viewingExpired) {
          $scope.viewExpired();
@@ -44,9 +45,8 @@ blocItOff.controller('MainController', ['$scope', '$firebaseArray', function($sc
       }
       $scope.$apply();
    }, 60000);
-
    $scope.viewExpired = function() {
-      $scope.title = "Expired Tasks";
+      $scope.title = "Past Tasks";
       $scope.visibleTasks = $scope.expiredTasks;
       viewingExpired = true;
    };
@@ -66,6 +66,8 @@ blocItOff.controller('MainController', ['$scope', '$firebaseArray', function($sc
 
       for (var i = 0; i < $scope.tasks.length; i++) {
          if ((currentTime - $scope.tasks[i].age) > 120000){
+            $scope.tasks[i].state = 'inactive';
+            $scope.tasks.$save($scope.tasks[i]);
             newExpiredTasks.push($scope.tasks[i]);
          } else {
             newActiveTasks.push($scope.tasks[i]);
@@ -79,7 +81,7 @@ blocItOff.controller('MainController', ['$scope', '$firebaseArray', function($sc
       console.log($scope.expiredTasks);
 
       // if it doesn't update
-      //$scope.$apply();
+      //$scope.$apply()
    };
 
    // if you want to check in the background
@@ -131,15 +133,14 @@ blocItOff.directive('newTaskInput', function() {
       templateUrl: '/templates/new-task-input.html',
       link: function(scope, element) {
          scope.addTask = function() {
-            // this doesn't need to be stored when adding a new task
-            // save this for finding the expired tasks
-            // scope.currentTime = (new Date()).getTime();
-            scope.newTaskPriority = '';
-            scope.newTaskState = '';
+            // init these keys for the task object
+            // scope.newTaskPriority = '';
+            // scope.newTaskState    = 'active';
+
             scope.task = {
                text:     scope.newTaskText,
                age:      (new Date()).getTime(),
-               state:    scope.newTaskState,
+               state:    'active',
                priority: scope.newTaskPriority
             };
 
@@ -153,6 +154,5 @@ blocItOff.directive('newTaskInput', function() {
       }
    };
 });
-
 
 },{}]},{},[1]);

@@ -35,7 +35,7 @@ blocItOff.controller('MainController', ['$scope', '$firebaseArray', function($sc
    $scope.title = 'Active Tasks';
 
 // update the active & past task lists every so often
-   var interval = setInterval(function () {
+   var interval = setInterval(function() {
       $scope.updateTasks();
       if (viewingExpired) {
          $scope.viewExpired();
@@ -44,7 +44,6 @@ blocItOff.controller('MainController', ['$scope', '$firebaseArray', function($sc
       }
       $scope.$apply();
    }, 60000);
-
    $scope.viewExpired = function() {
       $scope.title = "Past Tasks";
       $scope.visibleTasks = $scope.expiredTasks;

@@ -1,0 +1,19 @@
+.task-item {
+   padding: $base-spacing-unit * 1.5;
+
+   &.priority--low  { border-left: 4px solid green; }
+   &.priority--med  { border-left: 4px solid gray; }
+   &.priority--high { border-left: 4px solid red; }
+}
+.task-item__date {
+   color: $color-gray-md;
+   font-size: 12px;
+   line-height: 1.25;
+}
+
+.task-item__btn {
+   background:    red;
+   border:        0;
+   border-radius: 2px;
+   color:         #fff;
+}
