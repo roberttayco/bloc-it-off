@@ -13,11 +13,11 @@
          <ul>
             <li ng-repeat="task in visibleTasks" class="list__container-item">
                <div class="task-item priority--{{ task.priority }}">
-                  <div class="task-item__details">
+                  <div class="task-item__details {{ task.state }}">
                      {{ task.text }}<br>
                      <span class="task-item__date">{{ task.age | date }}</span>
                   </div>
-                 <button class="task-item__btn">Complete</button>
+                  <button ng-click="completeTask(task)" name="button">Complete</button>
               </div>
             </li>
          </ul>

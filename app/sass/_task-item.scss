@@ -4,16 +4,26 @@
    &.priority--low  { border-left: 4px solid green; }
    &.priority--med  { border-left: 4px solid gray; }
    &.priority--high { border-left: 4px solid red; }
+
 }
 .task-item__date {
-   color: $color-gray-md;
+   color: #ccc;
    font-size: 12px;
    line-height: 1.25;
 }
 
 .task-item__btn {
-   background:    red;
+   background:    light-gray;
    border:        0;
    border-radius: 2px;
    color:         #fff;
+
+   &:hover { cursor: pointer; }
+}
+
+.task-item__details {
+   &.inactive {
+      color: #bbb;
+      text-decoration: line-through;
+   }
 }

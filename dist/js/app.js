@@ -31,7 +31,7 @@ blocItOff.controller('MainController', ['$scope', '$firebaseArray', function($sc
    $scope.activeTasks  = []; // Active tasks array
    $scope.expiredTasks = []; // Expired tasks array
 
-   var viewingExpired = false;
+   var viewingExpired = $scope.viewingExpired = false;
 
    $scope.title = 'Active Tasks';
 
@@ -65,12 +65,17 @@ blocItOff.controller('MainController', ['$scope', '$firebaseArray', function($sc
           currentTime     = new Date().getTime();
 
       for (var i = 0; i < $scope.tasks.length; i++) {
-         if ((currentTime - $scope.tasks[i].age) > 120000){
-            $scope.tasks[i].state = 'inactive';
-            $scope.tasks.$save($scope.tasks[i]);
+         if ($scope.tasks[i].state ==='inactive') {
             newExpiredTasks.push($scope.tasks[i]);
+            // ('$scope.tasks[i] .task-item__details').addClass('completed');
          } else {
-            newActiveTasks.push($scope.tasks[i]);
+            if ((currentTime - $scope.tasks[i].age) > 999999999){
+               $scope.tasks[i].state = 'inactive';
+               $scope.tasks.$save($scope.tasks[i]);
+               newExpiredTasks.push($scope.tasks[i]);
+            } else {
+               newActiveTasks.push($scope.tasks[i]);
+            }
          }
       }
 
@@ -94,6 +99,26 @@ blocItOff.controller('MainController', ['$scope', '$firebaseArray', function($sc
       $scope.updateTasks();
       $scope.viewActive();
    });
+
+   $scope.completeTask = function(task) {
+      task.state = 'inactive';
+      // console.log("Completing task", task);
+      $scope.tasks.$save(task).then(function () {
+         // console.log("task state", task.state);
+         $scope.updateTasks();
+
+         if (viewingExpired) {
+            $scope.viewExpired();
+         } else {
+            $scope.viewActive();
+         }
+      }, function (error) {
+         console.log("there was an error", error);
+      });
+      // $scope.updateTasks();
+   }
+
+
 
 }]);
 
@@ -144,11 +169,17 @@ blocItOff.directive('newTaskInput', function() {
                priority: scope.newTaskPriority
             };
 
-            scope.tasks.$add(scope.task).then(function () {
-               scope.activeTasks.push(scope.task);
+            scope.tasks.$add(scope.task).then(function (ref) {
+               scope.task.$id = ref.key();
                scope.updateTasks();
+
+               if (scope.viewingExpired) {
+                  scope.viewExpired();
+               } else {
+                  scope.viewActive();
+               }
                scope.newTaskText = null;
-               scope.newTaskPriority = null;
+               scope.newTaskPriority = '';
             });
          };
       }

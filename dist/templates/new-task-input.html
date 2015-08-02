@@ -1,7 +1,8 @@
 <form class="list__input">
    <input type="text" ng-model="newTaskText" class="input--list-item" placeholder="Add a new task...">
-   <select ng-model="newTaskPriority" ng-change="visibleTasks.$save(task.priority)">
-     <option ng-select="selected" value="">Priority</option>
+   <label for="task-priority">Priority</label>
+   <select id="task-priority" ng-model="newTaskPriority" ng-change="visibleTasks.$save(task.priority)">
+     <!-- <option ng-select="selected" value="">Priority</option> -->
      <option ng-select="selected" value="low">Low</option>
      <option ng-select="selected" value="med">Med</option>
      <option ng-select="selected" value="high">High</option>
